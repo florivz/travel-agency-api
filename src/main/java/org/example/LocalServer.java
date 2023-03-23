@@ -13,11 +13,11 @@ import java.sql.SQLException;
 
 public class LocalServer {
 
-    private static DB DB = new DB();
+    private static final DB DB = new DB();
 
     public static void main(String[] args) throws IOException, SQLException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8500), 0);
-        HttpContext context = server.createContext("/");
+        HttpContext context = server.createContext("/addresses");
         context.setHandler(LocalServer::handleRequest);
         server.start();
 
