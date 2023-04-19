@@ -1,29 +1,61 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class RestServiceImpl implements RestService{
-    private List<String> addresses;
-    private static GsonConverter gsonConverter;
+public class RestServiceImpl implements RestService {
 
-    public String getAddresses(Connection connection) {
-        addresses = new ArrayList<>();
-        gsonConverter = new GsonConverter();
+    public String getHotels(Connection connection) {
+        List<Map<String, Object>> hotels = new ArrayList<>();
+        GsonConverter gsonConverter = new GsonConverter();
         try (PreparedStatement statement = connection.prepareStatement("""
-                    SELECT *
-                    FROM address
-                """)) {
+                SELECT *
+                FROM hotel
+            """)) {
             ResultSet resultSet = statement.executeQuery();
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
             while (resultSet.next()) {
-                addresses.add(resultSet.getString(2));
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    Object columnValue = resultSet.getObject(i);
+                    row.put(columnName, columnValue);
+                }
+                hotels.add(row);
             }
-            System.out.println("Addresses sent as JSON");
-            return gsonConverter.listToJSON(addresses);
+            System.out.println("Hotels sent as JSON");
+            return gsonConverter.listToJSON(hotels);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String getFlightConnections(Connection connection) {
+        List<Map<String, Object>> flightConnections = new ArrayList<>();
+        GsonConverter gsonConverter = new GsonConverter();
+        try (PreparedStatement statement = connection.prepareStatement("""
+                SELECT *
+                FROM flight_connection
+            """)) {
+            ResultSet resultSet = statement.executeQuery();
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            while (resultSet.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    Object columnValue = resultSet.getObject(i);
+                    row.put(columnName, columnValue);
+                }
+                flightConnections.add(row);
+            }
+            System.out.println("Flight connections sent as JSON");
+            return gsonConverter.listToJSON(flightConnections);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

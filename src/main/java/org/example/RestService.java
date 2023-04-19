@@ -1,7 +1,6 @@
 package org.example;
 
 import java.sql.Connection;
-import java.util.List;
 
 public interface RestService {
 
@@ -10,5 +9,7 @@ public interface RestService {
      * @param connection
      * @return Addresses as JSON
      */
-    public String getAddresses(Connection connection);
+    String getHotels(Connection connection);
+
+    String getFlightConnections(Connection connection);
 }
