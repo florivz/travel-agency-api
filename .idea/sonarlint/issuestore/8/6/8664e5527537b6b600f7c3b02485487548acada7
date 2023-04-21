@@ -1,0 +1,15 @@
+
+n
+java:S1450"SRemove the "gson" field and declare it as a local variable in the relevant methods.(…•ªûşÿÿÿÿ
+p
+java:S1450"ZRemove the "gsonBuilder" field and declare it as a local variable in the relevant methods.(Ô‘¢
+t
+java:S1450"YRemove the "prettyJson" field and declare it as a local variable in the relevant methods.(Éƒó„üÿÿÿÿ
+K
+java:S2696"6Make the enclosing method "static" or remove this set.(ˆ‹á1
+Q
+java:S2696"6Make the enclosing method "static" or remove this set.(ÛÜı†şÿÿÿÿ
+Q
+java:S2696"6Make the enclosing method "static" or remove this set.(½ÇßÚûÿÿÿÿ
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ

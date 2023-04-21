@@ -1,0 +1,9 @@
+
+\
+java:S1858!"F"getAddresses" returns a string, there's no need to call "toString()".(ô¢„ô
+G
+java:S1128"1Remove this unused import 'com.google.gson.Gson'.(–§
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ

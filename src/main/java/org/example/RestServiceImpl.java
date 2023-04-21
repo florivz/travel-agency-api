@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class RestServiceImpl implements RestService {
 
+
     public String getHotels(Connection connection) {
         List<Map<String, Object>> hotels = new ArrayList<>();
         GsonConverter gsonConverter = new GsonConverter();
@@ -33,6 +34,7 @@ public class RestServiceImpl implements RestService {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public String getFlightConnections(Connection connection) {
