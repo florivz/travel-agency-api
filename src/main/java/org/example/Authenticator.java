@@ -6,15 +6,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class handles all the operation necessary for the authentication of the request sender.
- * The authenticator identifies an accessor by the username and password sent via URI tokens.
+ * The Authenticator class manages the authentication of request senders.
+ * It identifies the accessor by the username and password sent via URI tokens.
+ *
  * @author I551381
  * @version 1.0
  */
 public class Authenticator {
 
     /**
-     * This map saves all the valid credentials of a user.
+     * Returns a map of valid user credentials.
+     *
+     * @return A map containing valid usernames and their corresponding passwords.
      */
     public Map<String, String> getCredentialsMap() {
         Map<String, String> credentials = new HashMap<>();
@@ -24,9 +27,10 @@ public class Authenticator {
     }
 
     /**
-     * This method extract the username from the sent URI using regex pattern.
-     * @param uri contains the server address, the request and both tokens (username and password)
-     * @return the username from the URI as String.
+     * Extracts the username from the given URI using a regex pattern.
+     *
+     * @param uri The URI containing the server address, request, and tokens (username and password).
+     * @return The extracted username as a String or null if not found.
      */
     public static String extractUsername(String uri) {
         Pattern pattern = Pattern.compile("username=([^&]+)");
@@ -38,9 +42,10 @@ public class Authenticator {
     }
 
     /**
-     * This method extract the password from the sent URI using regex pattern.
-     * @param uri contains the server address, the request and both tokens (username and password).
-     * @return the password from URI as String.
+     * Extracts the password from the given URI using a regex pattern.
+     *
+     * @param uri The URI containing the server address, request, and tokens (username and password).
+     * @return The extracted password as a String or null if not found.
      */
     public static String extractPassword(String uri) {
         Pattern pattern = Pattern.compile("password=([^&]+)");
@@ -52,16 +57,14 @@ public class Authenticator {
     }
 
     /**
-     * This method checks if the extracted credentials are listed in the credentials map
-     * @param credentials A map which listed all the valid users and their password as key value pair.
-     * @param username
-     * @param password
-     * @return returns true if the credentials are listed in the credentials map and false if not
+     * Checks if the provided credentials are listed in the credentials map.
+     *
+     * @param credentials A map containing valid users and their passwords as key-value pairs.
+     * @param username    The username to check.
+     * @param password    The password to check.
+     * @return True if the credentials are listed in the credentials map; false otherwise.
      */
     public static boolean checkCredentials(Map<String, String> credentials, String username, String password) {
-        if (credentials.containsKey(username)) {
-            return credentials.get(username).equals(password);
-        }
-        return false;
+        return credentials.containsKey(username) && credentials.get(username).equals(password);
     }
 }

@@ -5,21 +5,26 @@ import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
+/**
+ * A utility class to convert Java objects to JSON strings using Gson.
+ */
 public class GsonConverter {
 
-    private static GsonBuilder gsonBuilder;
-    private static Gson gson;
-    private static String prettyJson;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * Converts the list of the fetched data from the database to a JSON.
-     * @param list
-     * @return
+     * Private constructor to prevent instantiation of the utility class.
      */
-    public String listToJSON(List<?> list){
-        gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.setPrettyPrinting().create();
-        prettyJson = gson.toJson(list);
-        return prettyJson;
+    GsonConverter() {
+    }
+
+    /**
+     * Converts a List of objects into a pretty-printed JSON String. It can convert any type of object.
+     *
+     * @param list The list of objects to be converted to JSON.
+     * @return A JSON formatted string representation of the given list.
+     */
+    public static String listToJSON(List<?> list) {
+        return GSON.toJson(list);
     }
 }
