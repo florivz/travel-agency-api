@@ -40,7 +40,7 @@ public class RequestHandler {
      * @param requestType The type of request (HOTELS or FLIGHTS).
      * @throws IOException If an I/O error occurs while handling the request.
      */
-    private void handleRequest(HttpExchange exchange, RequestType requestType) throws IOException {
+    void handleRequest(HttpExchange exchange, RequestType requestType) throws IOException {
         String username = extractUsername(exchange.getRequestURI().toString());
         String password = extractPassword(exchange.getRequestURI().toString());
         if (checkCredentials(authenticator.getCredentialsMap(), username, password)) {
@@ -50,9 +50,17 @@ public class RequestHandler {
             } else if (requestType == RequestType.FLIGHTS) {
                 response = restServiceImpl.getFlightConnections(dbService.getConnection());
             }
-            exchange.sendResponseHeaders(200, response.getBytes().length);
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(response.getBytes());
+
+            if (response != null) {
+                exchange.sendResponseHeaders(200, response.getBytes().length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response.getBytes());
+                }
+            } else {
+                exchange.sendResponseHeaders(500, "Internal server error".getBytes().length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write("Internal server error".getBytes());
+                }
             }
         } else {
             exchange.sendResponseHeaders(401, "Invalid credentials provided".getBytes().length);
@@ -61,6 +69,7 @@ public class RequestHandler {
             }
         }
     }
+
 
     /**
      * The method is the request handler for the hotel GET request.
@@ -80,13 +89,5 @@ public class RequestHandler {
      */
     public void handleFlightsRequest(HttpExchange exchange) throws IOException {
         handleRequest(exchange, RequestType.FLIGHTS);
-    }
-
-    /**
-     * Enum representing the types of requests the server handles.
-     */
-    private enum RequestType {
-        HOTELS,
-        FLIGHTS
     }
 }
