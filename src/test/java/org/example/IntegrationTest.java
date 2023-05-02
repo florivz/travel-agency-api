@@ -50,7 +50,6 @@ public class IntegrationTest {
         connection.disconnect();
 
         assertEquals(200, responseCode);
-        // Add further assertions to check the content of the response if needed
     }
 
     @Test
